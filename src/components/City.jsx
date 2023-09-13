@@ -1,9 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { formatDate } from "../utils/formatdate";
 import styles from "./City.module.css";
+import { Fragment } from "react";
 
 function City() {
   const {id} = useParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const lat = searchParams.get('lat');
+  const lng = searchParams.get('lng');
   // TEMP DATA
   const currentCity = {
     cityName: "Lisbon",
@@ -50,7 +55,10 @@ function City() {
     //     <ButtonBack />
     //   </div>
     // </div>
+    <Fragment>
     <h1>City {id}</h1>
+    <p>Position: {lng}, {lat}</p>
+    </Fragment>
   );
 }
 

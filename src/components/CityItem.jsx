@@ -1,14 +1,17 @@
 import React from 'react'
 import styles from './CityItem.module.css'
 import { formatDateWithoutWeek } from '../utils/formatdate';
+import { Link } from 'react-router-dom';
 
 const CityItem = ({city}) => {
-    const {cityName, date} = city;
+    const {cityName, date, id} = city;
   return (
-    <li className={styles.cityItem}>
+    <li>
+      <Link className={styles.cityItem} to={`${id}`}>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDateWithoutWeek(date)}</time>
         <button className={styles.deleteBtn}>&times;</button>
+      </Link>
     </li>
   )
 }

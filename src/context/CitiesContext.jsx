@@ -7,6 +7,7 @@ const CITIES_URL = "https://apidata-zkgz.onrender.com/cities";
 const CitiesProvider = ({ children }) => {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentCity, setCurrentCity] = useState({});
 
   useEffect(() => {
     async function fetchCities() {
@@ -24,8 +25,30 @@ const CitiesProvider = ({ children }) => {
     fetchCities();
   }, []);
 
+  async function getCity(id) {
+    try {
+        setIsLoading(true);
+        const res = await fetch(`${CITIES_URL}/${id}`);
+        const data = await res.json();
+        setCurrentCity(data);
+    } 
+    catch (error) {
+        alert("There was an error loading data...");
+    } 
+    finally {
+        setIsLoading(false);
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{cities, isLoading}}>
+    <CitiesContext.Provider 
+        value={{
+            cities, 
+            isLoading, 
+            currentCity,
+            getCity,
+        }}
+    >
     {children}
     </CitiesContext.Provider>
   )

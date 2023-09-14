@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import Product from './pages/Product';
@@ -13,30 +12,8 @@ import City from './components/City';
 import Form from './components/Form';
 
 
-const CITIES_URL = 'https://apidata-zkgz.onrender.com/cities';
-
 const App = () => {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchCities(){
-      try{
-        setIsLoading(true)
-        const res = await fetch(`${CITIES_URL}`);
-        const data = await res.json();
-        setCities(data);
-      }
-      catch(error){
-        alert('There was an error loading data...');
-      }
-      finally {
-        setIsLoading(false)
-      }
-    }
-    fetchCities();
-  }, []);
-
+  
   return (
     <div>
       <Routes>
@@ -47,11 +24,11 @@ const App = () => {
         
         <Route path='app' element={<AppLayout />}>
           <Route index element={<Navigate replace to='cities' />} />
-          <Route path='cities' element={<CityList cities={cities} isLoading={isLoading} />} />
+          <Route path='cities' element={<CityList />} />
 
           <Route path='cities/:id' element={<City />} />
           
-          <Route path='countries' element={<CountryList cities={cities} isLoading={isLoading} />} />
+          <Route path='countries' element={<CountryList />} />
           <Route path='form' element={<Form />} />
         </Route>
 
